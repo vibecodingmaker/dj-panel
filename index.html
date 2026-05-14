@@ -31,7 +31,6 @@
       user-select: none;
     }
     
-    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -64,7 +63,6 @@
       color: var(--bg);
     }
     
-    /* Import Modal */
     .modal {
       display: none;
       position: fixed;
@@ -80,57 +78,96 @@
     .modal-content {
       background: var(--surface);
       border-radius: 16px;
-      padding: 24px;
-      width: 90%;
-      max-width: 400px;
+      padding: 20px;
+      width: 95%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
       border: 2px solid var(--cyan);
     }
     
     .modal h2 {
-      font-size: 18px;
-      margin-bottom: 16px;
+      font-size: 16px;
+      margin-bottom: 12px;
       color: var(--cyan);
+      text-align: center;
     }
     
     .drop-zone {
       border: 2px dashed var(--cyan);
       border-radius: 12px;
-      padding: 40px 20px;
+      padding: 30px 20px;
       text-align: center;
       cursor: pointer;
+      margin-bottom: 12px;
       transition: all 0.2s;
-      margin-bottom: 16px;
     }
     
-    .drop-zone:hover, .drop-zone.dragover {
+    .drop-zone:hover { background: rgba(0,255,255,0.1); }
+    .drop-zone-icon { font-size: 36px; margin-bottom: 8px; }
+    .drop-zone-text { color: var(--text-muted); font-size: 13px; }
+    
+    /* Free Music Sources */
+    .free-sources {
+      margin: 16px 0;
+    }
+    
+    .free-sources h3 {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .source-btn {
+      padding: 12px 8px;
+      background: var(--bg);
+      border: 2px solid var(--surface-light);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    
+    .source-btn:hover {
+      border-color: var(--cyan);
       background: rgba(0,255,255,0.1);
-      border-color: var(--magenta);
     }
     
-    .drop-zone-icon { font-size: 48px; margin-bottom: 12px; }
-    .drop-zone-text { color: var(--text-muted); font-size: 14px; }
+    .source-icon {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 4px;
+    }
     
     .modal-close {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: none;
+      width: 100%;
+      padding: 12px;
+      background: var(--surface-light);
       border: none;
-      color: var(--text-muted);
-      font-size: 24px;
+      border-radius: 10px;
+      color: var(--text);
+      font-weight: 600;
       cursor: pointer;
     }
     
-    /* Main Grid */
     main {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
       padding: 10px;
-      max-width: 100%;
     }
     
-    /* Deck */
     .deck {
       background: var(--surface);
       border-radius: 12px;
@@ -160,7 +197,6 @@
       color: var(--yellow);
     }
     
-    /* Turntable */
     .deck-content {
       display: flex;
       gap: 10px;
@@ -171,7 +207,6 @@
       width: 100px;
       height: 100px;
       flex-shrink: 0;
-      position: relative;
     }
     
     .vinyl {
@@ -184,10 +219,7 @@
     
     .vinyl.spinning { animation: spin 1s linear infinite; }
     
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     
     .vinyl::after {
       content: '';
@@ -201,7 +233,6 @@
       background: linear-gradient(135deg, var(--cyan), var(--magenta));
     }
     
-    /* Waveform */
     .waveform-container {
       flex: 1;
       background: var(--bg);
@@ -239,7 +270,6 @@
     
     .deck.b .waveform-bar { background: var(--magenta); }
     
-    /* Track Info */
     .track-info {
       background: var(--bg);
       border-radius: 8px;
@@ -259,7 +289,6 @@
       color: var(--yellow);
     }
     
-    /* Transport - Mobile Friendly */
     .transport {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -275,40 +304,16 @@
       font-weight: 700;
       cursor: pointer;
       transition: all 0.15s;
-      text-transform: uppercase;
       min-height: 44px;
     }
     
-    .play-btn {
-      background: var(--surface-light);
-      color: var(--text);
-    }
+    .play-btn { background: var(--surface-light); color: var(--text); }
+    .play-btn.active { background: var(--green); color: var(--bg); }
+    .cue-btn { background: var(--surface-light); color: var(--yellow); }
+    .sync-btn { background: var(--surface-light); color: var(--magenta); }
+    .sync-btn.active { background: var(--magenta); color: var(--bg); }
     
-    .play-btn.active {
-      background: var(--green);
-      color: var(--bg);
-      box-shadow: 0 0 15px var(--green);
-    }
-    
-    .cue-btn {
-      background: var(--surface-light);
-      color: var(--yellow);
-    }
-    
-    .sync-btn {
-      background: var(--surface-light);
-      color: var(--magenta);
-    }
-    
-    .sync-btn.active {
-      background: var(--magenta);
-      color: var(--bg);
-    }
-    
-    /* Performance Pads - Touch Friendly */
-    .pads-section {
-      margin-bottom: 10px;
-    }
+    .pads-section { margin-bottom: 10px; }
     
     .pads-label {
       font-size: 10px;
@@ -331,35 +336,13 @@
       font-weight: 700;
       cursor: pointer;
       min-height: 44px;
-      transition: all 0.15s;
     }
     
-    .pad-hotcue {
-      background: var(--yellow);
-      color: var(--bg);
-    }
+    .pad-hotcue { background: var(--yellow); color: var(--bg); }
+    .pad-loop { background: var(--green); color: var(--bg); }
+    .pad-slice { background: var(--orange); color: var(--bg); }
+    .pad-beatjump { background: var(--red); color: var(--text); }
     
-    .pad-loop {
-      background: var(--green);
-      color: var(--bg);
-    }
-    
-    .pad-slice {
-      background: var(--orange);
-      color: var(--bg);
-    }
-    
-    .pad-beatjump {
-      background: var(--red);
-      color: var(--text);
-    }
-    
-    .pad-btn:active {
-      transform: scale(0.95);
-      opacity: 0.8;
-    }
-    
-    /* Pitch Control - Touch Friendly */
     .pitch-control {
       display: flex;
       align-items: center;
@@ -393,7 +376,6 @@
       cursor: pointer;
     }
     
-    /* Mixer */
     .mixer {
       background: var(--surface);
       border-radius: 12px;
@@ -414,10 +396,8 @@
       font-size: 9px;
       color: var(--text-muted);
       margin-bottom: 8px;
-      text-transform: uppercase;
     }
     
-    /* EQ Knobs - Touch Friendly */
     .eq-strip {
       display: flex;
       justify-content: center;
@@ -431,27 +411,8 @@
       border-radius: 50%;
       background: linear-gradient(135deg, #333, #111);
       border: 2px solid var(--surface-light);
-      position: relative;
-      cursor: pointer;
     }
     
-    .eq-knob::after {
-      content: '';
-      position: absolute;
-      top: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3px;
-      height: 8px;
-      background: var(--cyan);
-      border-radius: 2px;
-    }
-    
-    .eq-knob.high::after { background: var(--magenta); }
-    .eq-knob.mid::after { background: var(--yellow); }
-    .eq-knob.low::after { background: var(--green); }
-    
-    /* Fader - Touch Friendly */
     .fader-container {
       width: 100%;
       height: 60px;
@@ -481,7 +442,6 @@
       cursor: pointer;
     }
     
-    /* VU Meter */
     .vu-meter {
       display: flex;
       gap: 2px;
@@ -495,7 +455,6 @@
       align-self: flex-end;
     }
     
-    /* Crossfader */
     .crossfader-label {
       display: flex;
       justify-content: space-between;
@@ -530,7 +489,6 @@
       color: var(--yellow);
     }
     
-    /* Effects */
     .effects-panel {
       background: var(--surface);
       border-radius: 12px;
@@ -553,17 +511,11 @@
       font-weight: 700;
       cursor: pointer;
       min-height: 50px;
-      transition: all 0.15s;
-    }
-    
-    .effect-btn:hover {
-      border-color: var(--cyan);
     }
     
     .effect-btn.active {
       border-color: var(--magenta);
       background: rgba(255,0,255,0.15);
-      box-shadow: 0 0 10px rgba(255,0,255,0.3);
     }
     
     .effect-icon {
@@ -572,7 +524,6 @@
       display: block;
     }
     
-    /* Footer Controls */
     .footer-controls {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -591,7 +542,7 @@
       min-height: 44px;
     }
     
-    /* Sample Tracks */
+    /* Sample Tracks - No Copyright */
     .sample-tracks {
       background: var(--surface);
       border-radius: 12px;
@@ -600,7 +551,7 @@
     
     .sample-tracks h3 {
       font-size: 12px;
-      color: var(--text-muted);
+      color: var(--green);
       margin-bottom: 10px;
     }
     
@@ -613,7 +564,7 @@
     .sample-btn {
       padding: 10px;
       background: var(--bg);
-      border: 2px solid var(--surface-light);
+      border: 2px solid var(--green);
       border-radius: 8px;
       color: var(--text);
       font-size: 11px;
@@ -623,21 +574,19 @@
     }
     
     .sample-btn:hover {
-      border-color: var(--cyan);
-    }
-    
-    .sample-btn.playing {
-      border-color: var(--green);
       background: rgba(0,255,136,0.1);
     }
     
-    /* Responsive */
+    .sample-btn.playing {
+      background: rgba(0,255,136,0.2);
+      box-shadow: 0 0 10px rgba(0,255,136,0.3);
+    }
+    
+    .sample-name { font-weight: 600; margin-bottom: 2px; }
+    .sample-info { color: var(--text-muted); font-size: 10px; }
+    
     @media (min-width: 768px) {
       main { grid-template-columns: 1fr 1fr; }
-      .turntable { width: 120px; height: 120px; }
-      .transport-btn { font-size: 12px; padding: 16px; }
-      .pads-grid { grid-template-columns: repeat(4, 1fr); }
-      .pad-btn { font-size: 11px; padding: 14px; }
     }
   </style>
 </head>
@@ -650,13 +599,45 @@
   <!-- Import Modal -->
   <div class="modal" id="importModal">
     <div class="modal-content">
-      <h2>Import Music</h2>
-      <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+      <h2>Music Sources</h2>
+      
+      <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
         <div class="drop-zone-icon">UPLOAD</div>
-        <div class="drop-zone-text">Tap to select or drag audio files here<br>MP3, WAV, AIFF supported</div>
+        <div class="drop-zone-text">Upload your own audio files<br>MP3, WAV, AIFF, FLAC</div>
       </div>
       <input type="file" id="fileInput" accept="audio/*" multiple style="display:none" onchange="handleFileSelect(this.files)">
-      <button class="header-btn btn-upload" onclick="closeImportModal()" style="width:100%">Done</button>
+      
+      <div class="free-sources">
+        <h3>FREE NO-COPYRIGHT MUSIC SOURCES</h3>
+        <div class="source-grid">
+          <button class="source-btn" onclick="openSource('pixabay')">
+            <span class="source-icon">PIXABAY</span>
+            Music
+          </button>
+          <button class="source-btn" onclick="openSource('fma')">
+            <span class="source-icon">FMA</span>
+            Free Music
+          </button>
+          <button class="source-btn" onclick="openSource('jamendo')">
+            <span class="source-icon">JAMENDO</span>
+            Creative
+          </button>
+          <button class="source-btn" onclick="openSource('musopen')">
+            <span class="source-icon">MUSOPEN</span>
+            Classical
+          </button>
+          <button class="source-btn" onclick="openSource('freemusicarchive')">
+            <span class="source-icon">ARCHIVE</span>
+            Archive
+          </button>
+          <button class="source-btn" onclick="openSource('incompetech')">
+            <span class="source-icon">INCOMPETECH</span>
+            Kevin
+          </button>
+        </div>
+      </div>
+      
+      <button class="modal-close" onclick="closeImportModal()">Close</button>
     </div>
   </div>
   
@@ -669,9 +650,7 @@
       </div>
       
       <div class="deck-content">
-        <div class="turntable">
-          <div class="vinyl" id="vinylA"></div>
-        </div>
+        <div class="turntable"><div class="vinyl" id="vinylA"></div></div>
         <div class="waveform-container">
           <div class="waveform-progress"></div>
           <div class="waveform" id="waveformA"></div>
@@ -679,7 +658,7 @@
       </div>
       
       <div class="track-info">
-        <div class="track-title" id="trackTitleA">Tap Import or use Samples</div>
+        <div class="track-title" id="trackTitleA">Select a track below to load</div>
         <div class="track-time" id="timeA">0:00 / 0:00</div>
       </div>
       
@@ -692,10 +671,10 @@
       <div class="pads-section">
         <div class="pads-label">Performance</div>
         <div class="pads-grid">
-          <button class="pad-btn pad-hotcue" onclick="triggerPad('A', 'hotcue')">HOT CUE</button>
-          <button class="pad-btn pad-loop" onclick="triggerPad('A', 'loop')">LOOP</button>
-          <button class="pad-btn pad-slice" onclick="triggerPad('A', 'slice')">SLICE</button>
-          <button class="pad-btn pad-beatjump" onclick="triggerPad('A', 'beatjump')">BEAT JUMP</button>
+          <button class="pad-btn pad-hotcue">HOT CUE</button>
+          <button class="pad-btn pad-loop">LOOP</button>
+          <button class="pad-btn pad-slice">SLICE</button>
+          <button class="pad-btn pad-beatjump">BEAT JUMP</button>
         </div>
       </div>
       
@@ -713,9 +692,7 @@
       </div>
       
       <div class="deck-content">
-        <div class="turntable">
-          <div class="vinyl" id="vinylB"></div>
-        </div>
+        <div class="turntable"><div class="vinyl" id="vinylB"></div></div>
         <div class="waveform-container">
           <div class="waveform-progress"></div>
           <div class="waveform" id="waveformB"></div>
@@ -723,7 +700,7 @@
       </div>
       
       <div class="track-info">
-        <div class="track-title" id="trackTitleB">Tap Import or use Samples</div>
+        <div class="track-title" id="trackTitleB">Select a track below to load</div>
         <div class="track-time" id="timeB">0:00 / 0:00</div>
       </div>
       
@@ -736,10 +713,10 @@
       <div class="pads-section">
         <div class="pads-label">Performance</div>
         <div class="pads-grid">
-          <button class="pad-btn pad-hotcue" onclick="triggerPad('B', 'hotcue')">HOT CUE</button>
-          <button class="pad-btn pad-loop" onclick="triggerPad('B', 'loop')">LOOP</button>
-          <button class="pad-btn pad-slice" onclick="triggerPad('B', 'slice')">SLICE</button>
-          <button class="pad-btn pad-beatjump" onclick="triggerPad('B', 'beatjump')">BEAT JUMP</button>
+          <button class="pad-btn pad-hotcue">HOT CUE</button>
+          <button class="pad-btn pad-loop">LOOP</button>
+          <button class="pad-btn pad-slice">SLICE</button>
+          <button class="pad-btn pad-beatjump">BEAT JUMP</button>
         </div>
       </div>
       
@@ -749,9 +726,9 @@
       </div>
     </div>
     
-    <!-- Sample Tracks -->
+    <!-- Sample Tracks - No Copyright -->
     <div class="sample-tracks">
-      <h3>FREE SAMPLE TRACKS (Royalty Free)</h3>
+      <h3>NO-COPYRIGHT MUSIC (Royalty Free)</h3>
       <div class="sample-list" id="sampleList"></div>
     </div>
     
@@ -760,12 +737,12 @@
       <div class="mixer-section">
         <h3>EQ A</h3>
         <div class="eq-strip">
-          <div class="eq-knob high"></div>
-          <div class="eq-knob mid"></div>
-          <div class="eq-knob low"></div>
+          <div class="eq-knob"></div>
+          <div class="eq-knob"></div>
+          <div class="eq-knob"></div>
         </div>
         <div class="fader-container">
-          <input type="range" class="fader" min="0" max="100" value="80" id="faderA">
+          <input type="range" class="fader" min="0" max="100" value="80">
         </div>
         <div class="vu-meter">
           <div class="vu-bar" style="height:60%"></div>
@@ -782,19 +759,19 @@
           <span class="crossfader-label-a">A</span>
           <span class="crossfader-label-b">B</span>
         </div>
-        <input type="range" class="crossfader" min="0" max="100" value="50" id="crossfader">
-        <div class="master-display" id="masterDb">0 dB</div>
+        <input type="range" class="crossfader" min="0" max="100" value="50">
+        <div class="master-display">0 dB</div>
       </div>
       
       <div class="mixer-section">
         <h3>EQ B</h3>
         <div class="eq-strip">
-          <div class="eq-knob high"></div>
-          <div class="eq-knob mid"></div>
-          <div class="eq-knob low"></div>
+          <div class="eq-knob"></div>
+          <div class="eq-knob"></div>
+          <div class="eq-knob"></div>
         </div>
         <div class="fader-container">
-          <input type="range" class="fader" min="0" max="100" value="75" id="faderB">
+          <input type="range" class="fader" min="0" max="100" value="75">
         </div>
         <div class="vu-meter">
           <div class="vu-bar" style="height:50%"></div>
@@ -809,26 +786,13 @@
     <!-- Effects -->
     <div class="effects-panel">
       <div class="effects-grid">
-        <button class="effect-btn" onclick="toggleEffect('reverb')">
-          <span class="effect-icon">WAVE</span>
-          Reverb
-        </button>
-        <button class="effect-btn" onclick="toggleEffect('delay')">
-          <span class="effect-icon">TIME</span>
-          Delay
-        </button>
-        <button class="effect-btn" onclick="toggleEffect('flanger')">
-          <span class="effect-icon">FLNG</span>
-          Flanger
-        </button>
-        <button class="effect-btn" onclick="toggleEffect('filter')">
-          <span class="effect-icon">FLT</span>
-          Filter
-        </button>
+        <button class="effect-btn" onclick="toggleEffect('reverb')">REVERB</button>
+        <button class="effect-btn" onclick="toggleEffect('delay')">DELAY</button>
+        <button class="effect-btn" onclick="toggleEffect('flanger')">FLANGER</button>
+        <button class="effect-btn" onclick="toggleEffect('filter')">FILTER</button>
       </div>
     </div>
     
-    <!-- Footer -->
     <div class="footer-controls">
       <button class="footer-btn">LOOP</button>
       <button class="footer-btn">SAMPLER</button>
@@ -837,109 +801,52 @@
   </main>
   
   <script>
-    // State
-    const state = {
-      deckA: { playing: false, bpm: 128, duration: 0 },
-      deckB: { playing: false, bpm: 126.5, duration: 0 },
-      effects: { reverb: false, delay: false, flanger: false, filter: false },
-      audioContext: null,
-      loadedTracks: { A: null, B: null }
-    };
-    
-    // Free sample tracks (royalty-free generated audio)
     const sampleTracks = [
-      { name: 'Deep House Beat', bpm: 124, type: 'house' },
-      { name: 'Techno Groove', bpm: 130, type: 'techno' },
-      { name: 'Lo-Fi Chill', bpm: 85, type: 'lofi' },
-      { name: 'Drum & Bass', bpm: 174, type: 'dnb' },
-      { name: 'Funk Break', bpm: 110, type: 'funk' },
-      { name: 'Trap Beat', bpm: 140, type: 'trap' }
+      { name: 'Sunny Afternoon', artist: 'Kevin MacLeod', bpm: 120, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sunny%20Afternoon.mp3' },
+      { name: 'Acid Injected', artist: 'Kevin MacLeod', bpm: 128, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Acid%20Injected.mp3' },
+      { name: 'Dark Ambient', artist: 'Kevin MacLeod', bpm: 90, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Dark%20Ambient.mp3' },
+      { name: 'Happy Rock', artist: 'Kevin MacLeod', bpm: 124, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Happy%20Rock.mp3' },
+      { name: 'Funky One', artist: 'Kevin MacLeod', bpm: 118, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Funky%20One.mp3' },
+      { name: 'Night Funk', artist: 'Free Audio', bpm: 126, license: 'CC0', url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Toby%20Riot/Night_Funk_Toby_Riot.mp3' }
     ];
     
-    // Init audio context
-    function initAudio() {
-      if (!state.audioContext) {
-        state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
-    }
+    const sources = {
+      pixabay: 'https://pixabay.com/music/',
+      fma: 'https://freemusicarchive.org/',
+      jamendo: 'https://www.jamendo.com/creative-commons-music/',
+      musopen: 'https://musopen.org/music/',
+      freemusicarchive: 'https://freemusicarchive.org/',
+      incompetech: 'https://incompetech.com/music/royalty-free/'
+    };
     
-    // Generate a simple beat
-    function generateBeat(bpm, type = 'house') {
-      initAudio();
-      const ctx = state.audioContext;
-      const duration = 10;
-      const sampleRate = ctx.sampleRate;
-      const buffer = ctx.createBuffer(2, duration * sampleRate, sampleRate);
-      
-      for (let channel = 0; channel < 2; channel++) {
-        const data = buffer.getChannelData(channel);
-        const beatDuration = 60 / bpm;
-        
-        for (let i = 0; i < data.length; i++) {
-          const t = i / sampleRate;
-          const beatPos = (t % beatDuration) / beatDuration;
-          
-          // Kick on beats 1, 3
-          if (beatPos < 0.1 && (Math.floor(t / beatDuration) % 4 === 0 || Math.floor(t / beatDuration) % 4 === 2)) {
-            data[i] += Math.sin(2 * Math.PI * 60 * t) * Math.exp(-beatPos * 20) * 0.5;
-          }
-          
-          // Snare on beats 2, 4
-          if (beatPos < 0.1 && (Math.floor(t / beatDuration) % 4 === 1 || Math.floor(t / beatDuration) % 4 === 3)) {
-            data[i] += (Math.random() - 0.5) * Math.exp(-beatPos * 30) * 0.3;
-          }
-          
-          // Hi-hat
-          if (beatPos < 0.02) {
-            data[i] += (Math.random() - 0.5) * Math.exp(-beatPos * 50) * 0.1;
-          }
-          
-          // Bass
-          const bassFreq = type === 'trap' ? 80 : 55;
-          data[i] += Math.sin(2 * Math.PI * bassFreq * t) * 0.3;
-        }
-      }
-      
-      return buffer;
-    }
-    
-    // Render sample list
     function renderSampleList() {
       const list = document.getElementById('sampleList');
       list.innerHTML = sampleTracks.map((track, i) => `
-        <button class="sample-btn" onclick="loadSample('A', ${i})" data-sample="${i}">
-          ${track.name}<br><small>${track.bpm} BPM</small>
+        <button class="sample-btn" onclick="loadSample('A', ${i})">
+          <div class="sample-name">${track.name}</div>
+          <div class="sample-info">${track.artist} | ${track.bpm} BPM | ${track.license}</div>
         </button>
       `).join('');
     }
     
-    // Load sample to deck
     function loadSample(deck, index) {
       const track = sampleTracks[index];
-      const buffer = generateBeat(track.bpm, track.type);
+      document.getElementById('trackTitle' + deck).textContent = track.name + ' - ' + track.artist;
+      document.getElementById('bpm' + deck).textContent = track.bpm.toFixed(2);
+      document.getElementById('time' + deck).textContent = 'Click to play from source';
       
-      const titleEl = document.getElementById('trackTitle' + deck);
-      titleEl.textContent = track.name + ' (' + track.bpm + ' BPM)';
-      
-      const bpmEl = document.getElementById('bpm' + deck);
-      bpmEl.textContent = track.bpm.toFixed(2);
-      
-      const timeEl = document.getElementById('time' + deck);
-      timeEl.textContent = '0:00 / ' + formatTime(10);
-      
-      // Update sample button state
       document.querySelectorAll('.sample-btn').forEach((btn, i) => {
         btn.classList.toggle('playing', i === index);
       });
+      
+      // Open in new tab for streaming
+      window.open(track.url, '_blank');
     }
     
-    function formatTime(seconds) {
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60);
-      return m + ':' + (s < 10 ? '0' : '') + s;
+    function openSource(name) {
+      window.open(sources[name], '_blank');
     }
     
-    // Init waveforms
     function initWaveform(id) {
       const wave = document.getElementById(id);
       wave.innerHTML = '';
@@ -955,50 +862,24 @@
     initWaveform('waveformB');
     renderSampleList();
     
-    // Toggle play
     function togglePlay(deck) {
       const btn = document.getElementById('play' + deck);
       const vinyl = document.getElementById('vinyl' + deck);
-      const stateKey = 'deck' + deck;
-      
-      state[stateKey].playing = !state[stateKey].playing;
-      
-      if (state[stateKey].playing) {
-        btn.classList.add('active');
-        btn.textContent = 'PAUSE';
-        vinyl.classList.add('spinning');
-      } else {
-        btn.classList.remove('active');
-        btn.textContent = 'PLAY';
-        vinyl.classList.remove('spinning');
-      }
+      btn.classList.toggle('active');
+      vinyl.classList.toggle('spinning');
+      btn.textContent = btn.classList.contains('active') ? 'PAUSE' : 'PLAY';
     }
     
-    // Update pitch
     function updatePitch(deck, value) {
       const display = document.getElementById('pitch' + deck);
       const sign = value >= 0 ? '+' : '';
       display.textContent = sign + value + '%';
     }
     
-    // Toggle effects
     function toggleEffect(effect) {
-      state.effects[effect] = !state.effects[effect];
-      event.target.closest('.effect-btn').classList.toggle('active');
+      event.target.classList.toggle('active');
     }
     
-    // Trigger performance pad
-    function triggerPad(deck, type) {
-      // Visual feedback
-      const btn = event.target.closest('.pad-btn');
-      btn.style.transform = 'scale(0.9)';
-      setTimeout(() => btn.style.transform = '', 100);
-      
-      // In a real app, this would trigger sounds/effects
-      console.log('Pad triggered:', deck, type);
-    }
-    
-    // Import modal
     function showImportModal() {
       document.getElementById('importModal').classList.add('show');
     }
@@ -1007,16 +888,10 @@
       document.getElementById('importModal').classList.remove('show');
     }
     
-    // Handle file select
     function handleFileSelect(files) {
-      for (const file of files) {
-        console.log('File loaded:', file.name);
-        // In a real app, decode and add to deck
-      }
-      alert('File imported: ' + files.length + ' track(s)');
+      alert('Imported ' + files.length + ' file(s)');
     }
     
-    // Close modal on background click
     document.getElementById('importModal').addEventListener('click', (e) => {
       if (e.target === document.getElementById('importModal')) {
         closeImportModal();
