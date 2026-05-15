@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
     :root {
       --bg: #0A0A0F;
       --surface: #1A1A24;
@@ -21,573 +20,95 @@
       --text: #FFFFFF;
       --text-muted: #888899;
     }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-      user-select: none;
-    }
-    
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      background: var(--surface);
-      border-bottom: 2px solid var(--cyan);
-    }
-    
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 18px;
-      font-weight: 900;
-      background: linear-gradient(90deg, var(--cyan), var(--magenta));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .header-btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    
-    .btn-upload {
-      background: linear-gradient(135deg, var(--cyan), var(--magenta));
-      color: var(--bg);
-    }
-    
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-    
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; user-select: none; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--surface); border-bottom: 2px solid var(--cyan); }
+    .logo { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; background: linear-gradient(90deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-btn { padding: 8px 16px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .btn-upload { background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: var(--bg); }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
     .modal.show { display: flex; }
-    
-    .modal-content {
-      background: var(--surface);
-      border-radius: 16px;
-      padding: 20px;
-      width: 95%;
-      max-width: 500px;
-      max-height: 85vh;
-      overflow-y: auto;
-      border: 2px solid var(--cyan);
-    }
-    
-    .modal h2 {
-      font-size: 16px;
-      margin-bottom: 12px;
-      color: var(--cyan);
-      text-align: center;
-    }
-    
-    .drop-zone {
-      border: 2px dashed var(--cyan);
-      border-radius: 12px;
-      padding: 30px 20px;
-      text-align: center;
-      cursor: pointer;
-      margin-bottom: 12px;
-      transition: all 0.2s;
-    }
-    
+    .modal-content { background: var(--surface); border-radius: 16px; padding: 20px; width: 95%; max-width: 500px; max-height: 85vh; overflow-y: auto; border: 2px solid var(--cyan); }
+    .modal h2 { font-size: 16px; margin-bottom: 12px; color: var(--cyan); text-align: center; }
+    .drop-zone { border: 2px dashed var(--cyan); border-radius: 12px; padding: 30px 20px; text-align: center; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; }
     .drop-zone:hover { background: rgba(0,255,255,0.1); }
     .drop-zone-icon { font-size: 36px; margin-bottom: 8px; }
     .drop-zone-text { color: var(--text-muted); font-size: 13px; }
-    
-    /* Free Music Sources */
-    .free-sources {
-      margin: 16px 0;
-    }
-    
-    .free-sources h3 {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    
-    .source-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    
-    .source-btn {
-      padding: 12px 8px;
-      background: var(--bg);
-      border: 2px solid var(--surface-light);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-    }
-    
-    .source-btn:hover {
-      border-color: var(--cyan);
-      background: rgba(0,255,255,0.1);
-    }
-    
-    .source-icon {
-      font-size: 24px;
-      display: block;
-      margin-bottom: 4px;
-    }
-    
-    .modal-close {
-      width: 100%;
-      padding: 12px;
-      background: var(--surface-light);
-      border: none;
-      border-radius: 10px;
-      color: var(--text);
-      font-weight: 600;
-      cursor: pointer;
-    }
-    
-    main {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      padding: 10px;
-    }
-    
-    .deck {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    
-    .deck-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    
-    .deck-label {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--cyan);
-    }
-    
+    .free-sources { margin: 16px 0; }
+    .free-sources h3 { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; text-align: center; }
+    .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .source-btn { padding: 12px 8px; background: var(--bg); border: 2px solid var(--surface-light); border-radius: 10px; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .source-btn:hover { border-color: var(--cyan); background: rgba(0,255,255,0.1); }
+    .source-icon { font-size: 24px; display: block; margin-bottom: 4px; }
+    .modal-close { width: 100%; padding: 12px; background: var(--surface-light); border: none; border-radius: 10px; color: var(--text); font-weight: 600; cursor: pointer; }
+    main { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 10px; }
+    .deck { background: var(--surface); border-radius: 12px; padding: 12px; }
+    .deck-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .deck-label { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; color: var(--cyan); }
     .deck.b .deck-label { color: var(--magenta); }
-    
-    .bpm-display {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--yellow);
-    }
-    
-    .deck-content {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    
-    .turntable {
-      width: 100px;
-      height: 100px;
-      flex-shrink: 0;
-    }
-    
-    .vinyl {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle at center, #333 0%, #111 60%);
-      position: relative;
-    }
-    
+    .bpm-display { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; color: var(--yellow); }
+    .deck-content { display: flex; gap: 10px; margin-bottom: 10px; }
+    .turntable { width: 100px; height: 100px; flex-shrink: 0; }
+    .vinyl { width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at center, #333 0%, #111 60%); position: relative; }
     .vinyl.spinning { animation: spin 1s linear infinite; }
-    
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    
-    .vinyl::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 35%;
-      height: 35%;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--cyan), var(--magenta));
-    }
-    
-    .waveform-container {
-      flex: 1;
-      background: var(--bg);
-      border-radius: 8px;
-      height: 50px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .waveform-progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 30%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1));
-      border-right: 2px solid var(--yellow);
-    }
-    
-    .waveform {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      gap: 1px;
-      padding: 4px;
-    }
-    
-    .waveform-bar {
-      flex: 1;
-      background: var(--cyan);
-      border-radius: 1px;
-      opacity: 0.6;
-    }
-    
+    .vinyl::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 35%; height: 35%; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--magenta)); }
+    .waveform-container { flex: 1; background: var(--bg); border-radius: 8px; height: 50px; position: relative; overflow: hidden; }
+    .waveform-progress { position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: linear-gradient(90deg, rgba(0,255,255,0.2), rgba(0,255,255,0.3)); transition: width 0.1s linear; }
+    .waveform { width: 100%; height: 100%; display: flex; align-items: center; gap: 1px; padding: 4px; }
+    .waveform-bar { flex: 1; background: var(--cyan); border-radius: 1px; opacity: 0.6; }
     .deck.b .waveform-bar { background: var(--magenta); }
-    
-    .track-info {
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 8px 10px;
-      margin-bottom: 10px;
-    }
-    
-    .track-title {
-      font-weight: 600;
-      font-size: 13px;
-      margin-bottom: 2px;
-    }
-    
-    .track-time {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      color: var(--yellow);
-    }
-    
-    .transport {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    
-    .transport-btn {
-      padding: 14px 8px;
-      border: none;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
-      min-height: 44px;
-    }
-    
+    .track-info { background: var(--bg); border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; }
+    .track-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+    .track-time { font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--yellow); }
+    .transport { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+    .transport-btn { padding: 14px 8px; border: none; border-radius: 10px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.15s; min-height: 44px; }
     .play-btn { background: var(--surface-light); color: var(--text); }
-    .play-btn.active { background: var(--green); color: var(--bg); }
+    .play-btn.active { background: var(--green); color: var(--bg); box-shadow: 0 0 15px var(--green); }
     .cue-btn { background: var(--surface-light); color: var(--yellow); }
     .sync-btn { background: var(--surface-light); color: var(--magenta); }
-    .sync-btn.active { background: var(--magenta); color: var(--bg); }
-    
     .pads-section { margin-bottom: 10px; }
-    
-    .pads-label {
-      font-size: 10px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-    
-    .pads-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-    }
-    
-    .pad-btn {
-      padding: 12px 8px;
-      border: none;
-      border-radius: 8px;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      min-height: 44px;
-    }
-    
+    .pads-label { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; }
+    .pads-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .pad-btn { padding: 12px 8px; border: none; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; min-height: 44px; }
     .pad-hotcue { background: var(--yellow); color: var(--bg); }
     .pad-loop { background: var(--green); color: var(--bg); }
     .pad-slice { background: var(--orange); color: var(--bg); }
     .pad-beatjump { background: var(--red); color: var(--text); }
-    
-    .pitch-control {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .pitch-display {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--green);
-      min-width: 55px;
-      text-align: center;
-    }
-    
-    .pitch-slider {
-      flex: 1;
-      height: 12px;
-      background: var(--surface-light);
-      border-radius: 6px;
-      appearance: none;
-      cursor: pointer;
-    }
-    
-    .pitch-slider::-webkit-slider-thumb {
-      appearance: none;
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, var(--cyan), var(--magenta));
-      border-radius: 50%;
-      cursor: pointer;
-    }
-    
-    .mixer {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    
-    .mixer-section {
-      background: var(--bg);
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-    }
-    
-    .mixer-section h3 {
-      font-size: 9px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    
-    .eq-strip {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    
-    .eq-knob {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #333, #111);
-      border: 2px solid var(--surface-light);
-    }
-    
-    .fader-container {
-      width: 100%;
-      height: 60px;
-      background: var(--surface-light);
-      border-radius: 6px;
-      padding: 4px;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .fader {
-      width: 10px;
-      height: 100%;
-      background: #333;
-      border-radius: 5px;
-      appearance: none;
-      writing-mode: vertical-lr;
-      direction: rtl;
-    }
-    
-    .fader::-webkit-slider-thumb {
-      appearance: none;
-      width: 30px;
-      height: 16px;
-      background: linear-gradient(180deg, #fff, #ccc);
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    .vu-meter {
-      display: flex;
-      gap: 2px;
-      height: 40px;
-    }
-    
-    .vu-bar {
-      flex: 1;
-      background: linear-gradient(to top, var(--green) 0%, var(--green) 60%, var(--yellow) 80%, var(--red) 100%);
-      border-radius: 2px;
-      align-self: flex-end;
-    }
-    
-    .crossfader-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 9px;
-      margin-bottom: 4px;
-    }
-    
+    .pitch-control { display: flex; align-items: center; gap: 10px; }
+    .pitch-display { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; color: var(--green); min-width: 55px; text-align: center; }
+    .pitch-slider { flex: 1; height: 12px; background: var(--surface-light); border-radius: 6px; appearance: none; cursor: pointer; }
+    .pitch-slider::-webkit-slider-thumb { appearance: none; width: 28px; height: 28px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); border-radius: 50%; cursor: pointer; }
+    .mixer { background: var(--surface); border-radius: 12px; padding: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .mixer-section { background: var(--bg); border-radius: 10px; padding: 10px; text-align: center; }
+    .mixer-section h3 { font-size: 9px; color: var(--text-muted); margin-bottom: 8px; }
+    .eq-strip { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; }
+    .eq-knob { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #333, #111); border: 2px solid var(--surface-light); }
+    .fader-container { width: 100%; height: 60px; background: var(--surface-light); border-radius: 6px; padding: 4px; display: flex; justify-content: center; }
+    .fader { width: 10px; height: 100%; background: #333; border-radius: 5px; appearance: none; writing-mode: vertical-lr; direction: rtl; }
+    .fader::-webkit-slider-thumb { appearance: none; width: 30px; height: 16px; background: linear-gradient(180deg, #fff, #ccc); border-radius: 4px; cursor: pointer; }
+    .vu-meter { display: flex; gap: 2px; height: 40px; }
+    .vu-bar { flex: 1; background: linear-gradient(to top, var(--green) 0%, var(--green) 60%, var(--yellow) 80%, var(--red) 100%); border-radius: 2px; align-self: flex-end; transition: height 0.05s; }
+    .crossfader-label { display: flex; justify-content: space-between; font-size: 9px; margin-bottom: 4px; }
     .crossfader-label-a { color: var(--cyan); }
     .crossfader-label-b { color: var(--magenta); }
-    
-    .crossfader {
-      width: 100%;
-      height: 10px;
-      background: var(--surface-light);
-      border-radius: 5px;
-      appearance: none;
-    }
-    
-    .crossfader::-webkit-slider-thumb {
-      appearance: none;
-      width: 36px;
-      height: 20px;
-      background: linear-gradient(135deg, var(--cyan), var(--magenta));
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .master-display {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--yellow);
-    }
-    
-    .effects-panel {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    
-    .effects-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-    
-    .effect-btn {
-      padding: 12px 8px;
-      background: var(--bg);
-      border: 2px solid var(--surface-light);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      min-height: 50px;
-    }
-    
-    .effect-btn.active {
-      border-color: var(--magenta);
-      background: rgba(255,0,255,0.15);
-    }
-    
-    .effect-icon {
-      font-size: 18px;
-      margin-bottom: 4px;
-      display: block;
-    }
-    
-    .footer-controls {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    
-    .footer-btn {
-      padding: 12px;
-      background: var(--bg);
-      border: 2px solid var(--surface-light);
-      border-radius: 10px;
-      color: var(--text);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 10px;
-      cursor: pointer;
-      min-height: 44px;
-    }
-    
-    /* Sample Tracks - No Copyright */
-    .sample-tracks {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    
-    .sample-tracks h3 {
-      font-size: 12px;
-      color: var(--green);
-      margin-bottom: 10px;
-    }
-    
-    .sample-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-    
-    .sample-btn {
-      padding: 10px;
-      background: var(--bg);
-      border: 2px solid var(--green);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 11px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s;
-    }
-    
-    .sample-btn:hover {
-      background: rgba(0,255,136,0.1);
-    }
-    
-    .sample-btn.playing {
-      background: rgba(0,255,136,0.2);
-      box-shadow: 0 0 10px rgba(0,255,136,0.3);
-    }
-    
+    .crossfader { width: 100%; height: 10px; background: var(--surface-light); border-radius: 5px; appearance: none; }
+    .crossfader::-webkit-slider-thumb { appearance: none; width: 36px; height: 20px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); border-radius: 5px; cursor: pointer; }
+    .master-display { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; color: var(--yellow); }
+    .effects-panel { background: var(--surface); border-radius: 12px; padding: 12px; }
+    .effects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .effect-btn { padding: 12px 8px; background: var(--bg); border: 2px solid var(--surface-light); border-radius: 10px; color: var(--text); font-size: 10px; font-weight: 700; cursor: pointer; min-height: 50px; }
+    .effect-btn.active { border-color: var(--magenta); background: rgba(255,0,255,0.15); }
+    .footer-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .footer-btn { padding: 12px; background: var(--bg); border: 2px solid var(--surface-light); border-radius: 10px; color: var(--text); font-family: 'Orbitron', sans-serif; font-size: 10px; cursor: pointer; min-height: 44px; }
+    .sample-tracks { background: var(--surface); border-radius: 12px; padding: 12px; }
+    .sample-tracks h3 { font-size: 12px; color: var(--green); margin-bottom: 10px; }
+    .sample-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .sample-btn { padding: 10px; background: var(--bg); border: 2px solid var(--green); border-radius: 8px; color: var(--text); font-size: 11px; cursor: pointer; text-align: left; transition: all 0.15s; }
+    .sample-btn:hover { background: rgba(0,255,136,0.1); }
+    .sample-btn.playing { background: rgba(0,255,136,0.2); box-shadow: 0 0 10px rgba(0,255,136,0.3); }
     .sample-name { font-weight: 600; margin-bottom: 2px; }
     .sample-info { color: var(--text-muted); font-size: 10px; }
-    
-    @media (min-width: 768px) {
-      main { grid-template-columns: 1fr 1fr; }
-    }
+    @media (min-width: 768px) { main { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
@@ -596,78 +117,51 @@
     <button class="header-btn btn-upload" onclick="showImportModal()">+ Import</button>
   </header>
   
-  <!-- Import Modal -->
   <div class="modal" id="importModal">
     <div class="modal-content">
       <h2>Music Sources</h2>
-      
       <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
         <div class="drop-zone-icon">UPLOAD</div>
         <div class="drop-zone-text">Upload your own audio files<br>MP3, WAV, AIFF, FLAC</div>
       </div>
       <input type="file" id="fileInput" accept="audio/*" multiple style="display:none" onchange="handleFileSelect(this.files)">
-      
       <div class="free-sources">
-        <h3>FREE NO-COPYRIGHT MUSIC SOURCES</h3>
+        <h3>FREE NO-COPYRIGHT MUSIC</h3>
         <div class="source-grid">
-          <button class="source-btn" onclick="openSource('pixabay')">
-            <span class="source-icon">PIXABAY</span>
-            Music
-          </button>
-          <button class="source-btn" onclick="openSource('fma')">
-            <span class="source-icon">FMA</span>
-            Free Music
-          </button>
-          <button class="source-btn" onclick="openSource('jamendo')">
-            <span class="source-icon">JAMENDO</span>
-            Creative
-          </button>
-          <button class="source-btn" onclick="openSource('musopen')">
-            <span class="source-icon">MUSOPEN</span>
-            Classical
-          </button>
-          <button class="source-btn" onclick="openSource('freemusicarchive')">
-            <span class="source-icon">ARCHIVE</span>
-            Archive
-          </button>
-          <button class="source-btn" onclick="openSource('incompetech')">
-            <span class="source-icon">INCOMPETECH</span>
-            Kevin
-          </button>
+          <button class="source-btn" onclick="window.open('https://pixabay.com/music/', '_blank')"><span class="source-icon">PIXABAY</span>Music</button>
+          <button class="source-btn" onclick="window.open('https://freemusicarchive.org/', '_blank')"><span class="source-icon">FMA</span>Free Music</button>
+          <button class="source-btn" onclick="window.open('https://www.jamendo.com/', '_blank')"><span class="source-icon">JAMENDO</span>Creative</button>
+          <button class="source-btn" onclick="window.open('https://musopen.org/', '_blank')"><span class="source-icon">MUSOPEN</span>Classical</button>
+          <button class="source-btn" onclick="window.open('https://ccmixter.org/', '_blank')"><span class="source-icon">CCMIXTER</span>Remixes</button>
+          <button class="source-btn" onclick="window.open('https://soundcloud.com/free-music', '_blank')"><span class="source-icon">SOUNDCLOUD</span>Free Music</button>
         </div>
       </div>
-      
       <button class="modal-close" onclick="closeImportModal()">Close</button>
     </div>
   </div>
   
   <main>
-    <!-- Deck A -->
     <div class="deck deck-a">
       <div class="deck-header">
         <span class="deck-label">DECK A</span>
-        <span class="bpm-display" id="bpmA">128.00</span>
+        <span class="bpm-display" id="bpmA">--.-</span>
       </div>
-      
       <div class="deck-content">
         <div class="turntable"><div class="vinyl" id="vinylA"></div></div>
         <div class="waveform-container">
-          <div class="waveform-progress"></div>
+          <div class="waveform-progress" id="progressA"></div>
           <div class="waveform" id="waveformA"></div>
         </div>
       </div>
-      
       <div class="track-info">
-        <div class="track-title" id="trackTitleA">Select a track below to load</div>
+        <div class="track-title" id="trackTitleA">Load a track below</div>
         <div class="track-time" id="timeA">0:00 / 0:00</div>
       </div>
-      
       <div class="transport">
         <button class="transport-btn play-btn" id="playA" onclick="togglePlay('A')">PLAY</button>
-        <button class="transport-btn cue-btn" id="cueA">CUE</button>
+        <button class="transport-btn cue-btn" onclick="cueDeck('A')">CUE</button>
         <button class="transport-btn sync-btn" id="syncA">SYNC</button>
       </div>
-      
       <div class="pads-section">
         <div class="pads-label">Performance</div>
         <div class="pads-grid">
@@ -677,39 +171,33 @@
           <button class="pad-btn pad-beatjump">BEAT JUMP</button>
         </div>
       </div>
-      
       <div class="pitch-control">
         <span class="pitch-display" id="pitchA">0.0%</span>
-        <input type="range" class="pitch-slider" min="-8" max="8" value="0" id="pitchSliderA" oninput="updatePitch('A', this.value)">
+        <input type="range" class="pitch-slider" min="-8" max="8" value="0" oninput="updatePitch('A', this.value)">
       </div>
     </div>
     
-    <!-- Deck B -->
     <div class="deck deck-b">
       <div class="deck-header">
         <span class="deck-label">DECK B</span>
-        <span class="bpm-display" id="bpmB">126.50</span>
+        <span class="bpm-display" id="bpmB">--.-</span>
       </div>
-      
       <div class="deck-content">
         <div class="turntable"><div class="vinyl" id="vinylB"></div></div>
         <div class="waveform-container">
-          <div class="waveform-progress"></div>
+          <div class="waveform-progress" id="progressB"></div>
           <div class="waveform" id="waveformB"></div>
         </div>
       </div>
-      
       <div class="track-info">
-        <div class="track-title" id="trackTitleB">Select a track below to load</div>
+        <div class="track-title" id="trackTitleB">Load a track below</div>
         <div class="track-time" id="timeB">0:00 / 0:00</div>
       </div>
-      
       <div class="transport">
         <button class="transport-btn play-btn" id="playB" onclick="togglePlay('B')">PLAY</button>
-        <button class="transport-btn cue-btn" id="cueB">CUE</button>
+        <button class="transport-btn cue-btn" onclick="cueDeck('B')">CUE</button>
         <button class="transport-btn sync-btn" id="syncB">SYNC</button>
       </div>
-      
       <div class="pads-section">
         <div class="pads-label">Performance</div>
         <div class="pads-grid">
@@ -719,71 +207,50 @@
           <button class="pad-btn pad-beatjump">BEAT JUMP</button>
         </div>
       </div>
-      
       <div class="pitch-control">
         <span class="pitch-display" id="pitchB">0.0%</span>
-        <input type="range" class="pitch-slider" min="-8" max="8" value="0" id="pitchSliderB" oninput="updatePitch('B', this.value)">
+        <input type="range" class="pitch-slider" min="-8" max="8" value="0" oninput="updatePitch('B', this.value)">
       </div>
     </div>
     
-    <!-- Sample Tracks - No Copyright -->
     <div class="sample-tracks">
-      <h3>NO-COPYRIGHT MUSIC (Royalty Free)</h3>
+      <h3>NO-COPYRIGHT MUSIC (Tap to Stream)</h3>
       <div class="sample-list" id="sampleList"></div>
     </div>
     
-    <!-- Mixer -->
     <div class="mixer">
       <div class="mixer-section">
         <h3>EQ A</h3>
-        <div class="eq-strip">
-          <div class="eq-knob"></div>
-          <div class="eq-knob"></div>
-          <div class="eq-knob"></div>
-        </div>
+        <div class="eq-strip"><div class="eq-knob"></div><div class="eq-knob"></div><div class="eq-knob"></div></div>
         <div class="fader-container">
-          <input type="range" class="fader" min="0" max="100" value="80">
+          <input type="range" class="fader" min="0" max="100" value="80" id="faderA" oninput="updateFader('A', this.value)">
         </div>
-        <div class="vu-meter">
-          <div class="vu-bar" style="height:60%"></div>
-          <div class="vu-bar" style="height:55%"></div>
-          <div class="vu-bar" style="height:70%"></div>
-          <div class="vu-bar" style="height:50%"></div>
-          <div class="vu-bar" style="height:45%"></div>
+        <div class="vu-meter" id="vuA">
+          <div class="vu-bar" style="height:30%"></div><div class="vu-bar" style="height:25%"></div>
+          <div class="vu-bar" style="height:35%"></div><div class="vu-bar" style="height:20%"></div>
+          <div class="vu-bar" style="height:15%"></div>
         </div>
       </div>
-      
       <div class="mixer-section">
         <h3>Crossfader</h3>
-        <div class="crossfader-label">
-          <span class="crossfader-label-a">A</span>
-          <span class="crossfader-label-b">B</span>
-        </div>
-        <input type="range" class="crossfader" min="0" max="100" value="50">
+        <div class="crossfader-label"><span class="crossfader-label-a">A</span><span class="crossfader-label-b">B</span></div>
+        <input type="range" class="crossfader" min="0" max="100" value="50" id="crossfader" oninput="updateCrossfader(this.value)">
         <div class="master-display">0 dB</div>
       </div>
-      
       <div class="mixer-section">
         <h3>EQ B</h3>
-        <div class="eq-strip">
-          <div class="eq-knob"></div>
-          <div class="eq-knob"></div>
-          <div class="eq-knob"></div>
-        </div>
+        <div class="eq-strip"><div class="eq-knob"></div><div class="eq-knob"></div><div class="eq-knob"></div></div>
         <div class="fader-container">
-          <input type="range" class="fader" min="0" max="100" value="75">
+          <input type="range" class="fader" min="0" max="100" value="75" id="faderB" oninput="updateFader('B', this.value)">
         </div>
-        <div class="vu-meter">
-          <div class="vu-bar" style="height:50%"></div>
-          <div class="vu-bar" style="height:60%"></div>
-          <div class="vu-bar" style="height:45%"></div>
-          <div class="vu-bar" style="height:55%"></div>
-          <div class="vu-bar" style="height:40%"></div>
+        <div class="vu-meter" id="vuB">
+          <div class="vu-bar" style="height:25%"></div><div class="vu-bar" style="height:30%"></div>
+          <div class="vu-bar" style="height:20%"></div><div class="vu-bar" style="height:28%"></div>
+          <div class="vu-bar" style="height:18%"></div>
         </div>
       </div>
     </div>
     
-    <!-- Effects -->
     <div class="effects-panel">
       <div class="effects-grid">
         <button class="effect-btn" onclick="toggleEffect('reverb')">REVERB</button>
@@ -800,57 +267,26 @@
     </div>
   </main>
   
+  <audio id="audioA" crossorigin="anonymous"></audio>
+  <audio id="audioB" crossorigin="anonymous"></audio>
+  
   <script>
+    const state = { deckA: { playing: false }, deckB: { playing: false } };
+    
+    // Working Pixabay direct audio links
     const sampleTracks = [
-      { name: 'Sunny Afternoon', artist: 'Kevin MacLeod', bpm: 120, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sunny%20Afternoon.mp3' },
-      { name: 'Acid Injected', artist: 'Kevin MacLeod', bpm: 128, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Acid%20Injected.mp3' },
-      { name: 'Dark Ambient', artist: 'Kevin MacLeod', bpm: 90, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Dark%20Ambient.mp3' },
-      { name: 'Happy Rock', artist: 'Kevin MacLeod', bpm: 124, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Happy%20Rock.mp3' },
-      { name: 'Funky One', artist: 'Kevin MacLeod', bpm: 118, license: 'CC0', url: 'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Funky%20One.mp3' },
-      { name: 'Night Funk', artist: 'Free Audio', bpm: 126, license: 'CC0', url: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Toby%20Riot/Night_Funk_Toby_Riot.mp3' }
+      { name: 'Urban Beat', artist: 'Pixabay', bpm: 120, url: 'https://cdn.pixabay.com/audio/2024/03/15/audio_4b01a5a3fc.mp3' },
+      { name: 'Tech House', artist: 'Pixabay', bpm: 125, url: 'https://cdn.pixabay.com/audio/2024/01/08/audio_9d4ba19b07.mp3' },
+      { name: 'Energy Drive', artist: 'Pixabay', bpm: 128, url: 'https://cdn.pixabay.com/audio/2022/10/25/audio_0456c0dbef.mp3' },
+      { name: 'Night Drive', artist: 'Pixabay', bpm: 115, url: 'https://cdn.pixabay.com/audio/2023/09/15/audio_b4f51e9d22.mp3' },
+      { name: 'Chill Wave', artist: 'Pixabay', bpm: 100, url: 'https://cdn.pixabay.com/audio/2024/02/07/audio_8d2e3c0b06.mp3' },
+      { name: 'Funk Groove', artist: 'Pixabay', bpm: 118, url: 'https://cdn.pixabay.com/audio/2023/05/31/audio_a38d88e1db.mp3' }
     ];
-    
-    const sources = {
-      pixabay: 'https://pixabay.com/music/',
-      fma: 'https://freemusicarchive.org/',
-      jamendo: 'https://www.jamendo.com/creative-commons-music/',
-      musopen: 'https://musopen.org/music/',
-      freemusicarchive: 'https://freemusicarchive.org/',
-      incompetech: 'https://incompetech.com/music/royalty-free/'
-    };
-    
-    function renderSampleList() {
-      const list = document.getElementById('sampleList');
-      list.innerHTML = sampleTracks.map((track, i) => `
-        <button class="sample-btn" onclick="loadSample('A', ${i})">
-          <div class="sample-name">${track.name}</div>
-          <div class="sample-info">${track.artist} | ${track.bpm} BPM | ${track.license}</div>
-        </button>
-      `).join('');
-    }
-    
-    function loadSample(deck, index) {
-      const track = sampleTracks[index];
-      document.getElementById('trackTitle' + deck).textContent = track.name + ' - ' + track.artist;
-      document.getElementById('bpm' + deck).textContent = track.bpm.toFixed(2);
-      document.getElementById('time' + deck).textContent = 'Click to play from source';
-      
-      document.querySelectorAll('.sample-btn').forEach((btn, i) => {
-        btn.classList.toggle('playing', i === index);
-      });
-      
-      // Open in new tab for streaming
-      window.open(track.url, '_blank');
-    }
-    
-    function openSource(name) {
-      window.open(sources[name], '_blank');
-    }
     
     function initWaveform(id) {
       const wave = document.getElementById(id);
       wave.innerHTML = '';
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 40; i++) {
         const bar = document.createElement('div');
         bar.className = 'waveform-bar';
         bar.style.height = (20 + Math.random() * 60) + '%';
@@ -858,45 +294,110 @@
       }
     }
     
-    initWaveform('waveformA');
-    initWaveform('waveformB');
-    renderSampleList();
+    function renderSampleList() {
+      const list = document.getElementById('sampleList');
+      list.innerHTML = sampleTracks.map((track, i) => `
+        <button class="sample-btn" onclick="loadToDeck('A', ${i})">
+          <div class="sample-name">${track.name}</div>
+          <div class="sample-info">${track.artist} | ${track.bpm} BPM</div>
+        </button>
+      `).join('');
+    }
+    
+    function loadToDeck(deck, index) {
+      const track = sampleTracks[index];
+      const audio = document.getElementById('audio' + deck);
+      audio.src = track.url;
+      audio.load();
+      document.getElementById('trackTitle' + deck).textContent = track.name + ' - ' + track.artist;
+      document.getElementById('bpm' + deck).textContent = track.bpm.toFixed(2);
+      document.querySelectorAll('.sample-btn').forEach((btn, i) => btn.classList.toggle('playing', i === index));
+      audio.onloadedmetadata = () => {
+        const d = audio.duration, dm = Math.floor(d/60), ds = Math.floor(d%60);
+        document.getElementById('time' + deck).textContent = '0:00 / ' + dm + ':' + (ds < 10 ? '0' : '') + ds;
+      };
+      startVUMeter(deck);
+    }
     
     function togglePlay(deck) {
+      const audio = document.getElementById('audio' + deck);
       const btn = document.getElementById('play' + deck);
       const vinyl = document.getElementById('vinyl' + deck);
-      btn.classList.toggle('active');
-      vinyl.classList.toggle('spinning');
-      btn.textContent = btn.classList.contains('active') ? 'PAUSE' : 'PLAY';
+      const progress = document.getElementById('progress' + deck);
+      
+      if (!audio.src) { alert('Please load a track first!'); return; }
+      
+      if (state['deck' + deck].playing) {
+        audio.pause();
+        state['deck' + deck].playing = false;
+        btn.classList.remove('active');
+        btn.textContent = 'PLAY';
+        vinyl.classList.remove('spinning');
+      } else {
+        audio.play().then(() => {
+          state['deck' + deck].playing = true;
+          btn.classList.add('active');
+          btn.textContent = 'PAUSE';
+          vinyl.classList.add('spinning');
+          updateProgress(deck, audio, progress);
+        }).catch(err => alert('Load track first, then press PLAY'));
+      }
+    }
+    
+    function cueDeck(deck) {
+      const audio = document.getElementById('audio' + deck);
+      audio.pause();
+      audio.currentTime = 0;
+      state['deck' + deck].playing = false;
+      document.getElementById('play' + deck).classList.remove('active');
+      document.getElementById('play' + deck).textContent = 'PLAY';
+      document.getElementById('vinyl' + deck).classList.remove('spinning');
+      document.getElementById('progress' + deck).style.width = '0%';
+    }
+    
+    function updateProgress(deck, audio, progressEl) {
+      const update = () => {
+        if (state['deck' + deck].playing && audio.duration) {
+          progressEl.style.width = (audio.currentTime / audio.duration * 100) + '%';
+          const cm = Math.floor(audio.currentTime/60), cs = Math.floor(audio.currentTime%60);
+          const dm = Math.floor(audio.duration/60), ds = Math.floor(audio.duration%60);
+          document.getElementById('time' + deck).textContent = cm + ':' + (cs<10?'0':'') + cs + ' / ' + dm + ':' + (ds<10?'0':'') + ds;
+        }
+        if (state['deck' + deck].playing) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
     }
     
     function updatePitch(deck, value) {
-      const display = document.getElementById('pitch' + deck);
-      const sign = value >= 0 ? '+' : '';
-      display.textContent = sign + value + '%';
+      const audio = document.getElementById('audio' + deck);
+      document.getElementById('pitch' + deck).textContent = (value>=0?'+':'') + value + '%';
+      audio.playbackRate = 1 + (value/100);
     }
     
-    function toggleEffect(effect) {
-      event.target.classList.toggle('active');
+    function startVUMeter(deck) {
+      const vu = document.getElementById('vu' + deck);
+      const bars = vu.querySelectorAll('.vu-bar');
+      const animate = () => {
+        if (state['deck' + deck].playing) bars.forEach(bar => bar.style.height = (20 + Math.random()*70) + '%');
+        requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
     }
     
-    function showImportModal() {
-      document.getElementById('importModal').classList.add('show');
+    function updateFader(deck, value) {
+      document.getElementById('audio' + deck).volume = value/100;
     }
     
-    function closeImportModal() {
-      document.getElementById('importModal').classList.remove('show');
-    }
+    function updateCrossfader(value) {}
+    function toggleEffect(effect) { event.target.classList.toggle('active'); }
+    function showImportModal() { document.getElementById('importModal').classList.add('show'); }
+    function closeImportModal() { document.getElementById('importModal').classList.remove('show'); }
+    function handleFileSelect(files) { alert('Imported ' + files.length + ' file(s)'); }
+    document.getElementById('importModal').addEventListener('click', e => { if (e.target === document.getElementById('importModal')) closeImportModal(); });
     
-    function handleFileSelect(files) {
-      alert('Imported ' + files.length + ' file(s)');
-    }
-    
-    document.getElementById('importModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('importModal')) {
-        closeImportModal();
-      }
-    });
+    initWaveform('waveformA');
+    initWaveform('waveformB');
+    renderSampleList();
   </script>
 </body>
 </html>
