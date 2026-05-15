@@ -8,38 +8,16 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     :root {
-      --bg: #0A0A0F;
-      --surface: #1A1A24;
-      --surface-light: #2A2A3A;
-      --cyan: #00FFFF;
-      --magenta: #FF00FF;
-      --yellow: #FFFF00;
-      --green: #00FF88;
-      --red: #FF3366;
-      --orange: #FF9500;
-      --text: #FFFFFF;
-      --text-muted: #888899;
+      --bg: #0A0A0F; --surface: #1A1A24; --surface-light: #2A2A3A;
+      --cyan: #00FFFF; --magenta: #FF00FF; --yellow: #FFFF00;
+      --green: #00FF88; --red: #FF3366; --orange: #FF9500;
+      --text: #FFFFFF; --text-muted: #888899;
     }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; user-select: none; }
     header { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--surface); border-bottom: 2px solid var(--cyan); }
     .logo { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; background: linear-gradient(90deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .header-btn { padding: 8px 16px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; }
     .btn-upload { background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: var(--bg); }
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
-    .modal.show { display: flex; }
-    .modal-content { background: var(--surface); border-radius: 16px; padding: 20px; width: 95%; max-width: 500px; max-height: 85vh; overflow-y: auto; border: 2px solid var(--cyan); }
-    .modal h2 { font-size: 16px; margin-bottom: 12px; color: var(--cyan); text-align: center; }
-    .drop-zone { border: 2px dashed var(--cyan); border-radius: 12px; padding: 30px 20px; text-align: center; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; }
-    .drop-zone:hover { background: rgba(0,255,255,0.1); }
-    .drop-zone-icon { font-size: 36px; margin-bottom: 8px; }
-    .drop-zone-text { color: var(--text-muted); font-size: 13px; }
-    .free-sources { margin: 16px 0; }
-    .free-sources h3 { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; text-align: center; }
-    .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-    .source-btn { padding: 12px 8px; background: var(--bg); border: 2px solid var(--surface-light); border-radius: 10px; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.15s; }
-    .source-btn:hover { border-color: var(--cyan); background: rgba(0,255,255,0.1); }
-    .source-icon { font-size: 24px; display: block; margin-bottom: 4px; }
-    .modal-close { width: 100%; padding: 12px; background: var(--surface-light); border: none; border-radius: 10px; color: var(--text); font-weight: 600; cursor: pointer; }
     main { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 10px; }
     .deck { background: var(--surface); border-radius: 12px; padding: 12px; }
     .deck-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -108,37 +86,17 @@
     .sample-btn.playing { background: rgba(0,255,136,0.2); box-shadow: 0 0 10px rgba(0,255,136,0.3); }
     .sample-name { font-weight: 600; margin-bottom: 2px; }
     .sample-info { color: var(--text-muted); font-size: 10px; }
+    .info-bar { background: var(--surface); border-radius: 8px; padding: 10px; text-align: center; font-size: 11px; color: var(--text-muted); }
+    .info-bar span { color: var(--cyan); font-weight: 600; }
     @media (min-width: 768px) { main { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">DJ PANEL PRO</div>
-    <button class="header-btn btn-upload" onclick="showImportModal()">+ Import</button>
+    <button class="header-btn btn-upload" onclick="document.getElementById('fileInput').click()">+ Import</button>
+    <input type="file" id="fileInput" accept="audio/*" multiple style="display:none" onchange="handleFileSelect(this.files)">
   </header>
-  
-  <div class="modal" id="importModal">
-    <div class="modal-content">
-      <h2>Music Sources</h2>
-      <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
-        <div class="drop-zone-icon">UPLOAD</div>
-        <div class="drop-zone-text">Upload your own audio files<br>MP3, WAV, AIFF, FLAC</div>
-      </div>
-      <input type="file" id="fileInput" accept="audio/*" multiple style="display:none" onchange="handleFileSelect(this.files)">
-      <div class="free-sources">
-        <h3>FREE NO-COPYRIGHT MUSIC</h3>
-        <div class="source-grid">
-          <button class="source-btn" onclick="window.open('https://pixabay.com/music/', '_blank')"><span class="source-icon">PIXABAY</span>Music</button>
-          <button class="source-btn" onclick="window.open('https://freemusicarchive.org/', '_blank')"><span class="source-icon">FMA</span>Free Music</button>
-          <button class="source-btn" onclick="window.open('https://www.jamendo.com/', '_blank')"><span class="source-icon">JAMENDO</span>Creative</button>
-          <button class="source-btn" onclick="window.open('https://musopen.org/', '_blank')"><span class="source-icon">MUSOPEN</span>Classical</button>
-          <button class="source-btn" onclick="window.open('https://ccmixter.org/', '_blank')"><span class="source-icon">CCMIXTER</span>Remixes</button>
-          <button class="source-btn" onclick="window.open('https://soundcloud.com/free-music', '_blank')"><span class="source-icon">SOUNDCLOUD</span>Free Music</button>
-        </div>
-      </div>
-      <button class="modal-close" onclick="closeImportModal()">Close</button>
-    </div>
-  </div>
   
   <main>
     <div class="deck deck-a">
@@ -165,10 +123,10 @@
       <div class="pads-section">
         <div class="pads-label">Performance</div>
         <div class="pads-grid">
-          <button class="pad-btn pad-hotcue">HOT CUE</button>
-          <button class="pad-btn pad-loop">LOOP</button>
-          <button class="pad-btn pad-slice">SLICE</button>
-          <button class="pad-btn pad-beatjump">BEAT JUMP</button>
+          <button class="pad-btn pad-hotcue" onclick="triggerPad('hotcue')">HOT CUE</button>
+          <button class="pad-btn pad-loop" onclick="triggerPad('loop')">LOOP</button>
+          <button class="pad-btn pad-slice" onclick="triggerPad('slice')">SLICE</button>
+          <button class="pad-btn pad-beatjump" onclick="triggerPad('beatjump')">BEAT JUMP</button>
         </div>
       </div>
       <div class="pitch-control">
@@ -201,10 +159,10 @@
       <div class="pads-section">
         <div class="pads-label">Performance</div>
         <div class="pads-grid">
-          <button class="pad-btn pad-hotcue">HOT CUE</button>
-          <button class="pad-btn pad-loop">LOOP</button>
-          <button class="pad-btn pad-slice">SLICE</button>
-          <button class="pad-btn pad-beatjump">BEAT JUMP</button>
+          <button class="pad-btn pad-hotcue" onclick="triggerPad('hotcue')">HOT CUE</button>
+          <button class="pad-btn pad-loop" onclick="triggerPad('loop')">LOOP</button>
+          <button class="pad-btn pad-slice" onclick="triggerPad('slice')">SLICE</button>
+          <button class="pad-btn pad-beatjump" onclick="triggerPad('beatjump')">BEAT JUMP</button>
         </div>
       </div>
       <div class="pitch-control">
@@ -214,8 +172,12 @@
     </div>
     
     <div class="sample-tracks">
-      <h3>NO-COPYRIGHT MUSIC (Tap to Stream)</h3>
+      <h3>GENERATED BEATS (Tap to Load)</h3>
       <div class="sample-list" id="sampleList"></div>
+    </div>
+    
+    <div class="info-bar">
+      <span>Web Audio API</span> - Beats synthesized locally in browser
     </div>
     
     <div class="mixer">
@@ -235,7 +197,7 @@
         <h3>Crossfader</h3>
         <div class="crossfader-label"><span class="crossfader-label-a">A</span><span class="crossfader-label-b">B</span></div>
         <input type="range" class="crossfader" min="0" max="100" value="50" id="crossfader" oninput="updateCrossfader(this.value)">
-        <div class="master-display">0 dB</div>
+        <div class="master-display" id="masterDb">0 dB</div>
       </div>
       <div class="mixer-section">
         <h3>EQ B</h3>
@@ -267,21 +229,112 @@
     </div>
   </main>
   
-  <audio id="audioA" crossorigin="anonymous"></audio>
-  <audio id="audioB" crossorigin="anonymous"></audio>
-  
   <script>
-    const state = { deckA: { playing: false }, deckB: { playing: false } };
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
     
-    // Working Pixabay direct audio links
+    const state = {
+      deckA: { playing: false, gainNodes: null, startTime: 0, bpm: 124, type: 'house' },
+      deckB: { playing: false, gainNodes: null, startTime: 0, bpm: 130, type: 'techno' }
+    };
+    
     const sampleTracks = [
-      { name: 'Urban Beat', artist: 'Pixabay', bpm: 120, url: 'https://cdn.pixabay.com/audio/2024/03/15/audio_4b01a5a3fc.mp3' },
-      { name: 'Tech House', artist: 'Pixabay', bpm: 125, url: 'https://cdn.pixabay.com/audio/2024/01/08/audio_9d4ba19b07.mp3' },
-      { name: 'Energy Drive', artist: 'Pixabay', bpm: 128, url: 'https://cdn.pixabay.com/audio/2022/10/25/audio_0456c0dbef.mp3' },
-      { name: 'Night Drive', artist: 'Pixabay', bpm: 115, url: 'https://cdn.pixabay.com/audio/2023/09/15/audio_b4f51e9d22.mp3' },
-      { name: 'Chill Wave', artist: 'Pixabay', bpm: 100, url: 'https://cdn.pixabay.com/audio/2024/02/07/audio_8d2e3c0b06.mp3' },
-      { name: 'Funk Groove', artist: 'Pixabay', bpm: 118, url: 'https://cdn.pixabay.com/audio/2023/05/31/audio_a38d88e1db.mp3' }
+      { name: 'Deep House', artist: 'Synth', bpm: 124, type: 'house' },
+      { name: 'Techno Beat', artist: 'Synth', bpm: 130, type: 'techno' },
+      { name: 'Lo-Fi Chill', artist: 'Synth', bpm: 85, type: 'lofi' },
+      { name: 'Drum & Bass', artist: 'Synth', bpm: 174, type: 'dnb' },
+      { name: 'Funk Groove', artist: 'Synth', bpm: 110, type: 'funk' },
+      { name: 'Trap Beat', artist: 'Synth', bpm: 140, type: 'trap' }
     ];
+    
+    let beatIntervals = { A: null, B: null };
+    
+    function startBeat(deck) {
+      const ctx = getAudioContext();
+      const s = state['deck' + deck];
+      if (beatIntervals[deck]) clearInterval(beatIntervals[deck]);
+      
+      const masterGain = ctx.createGain();
+      masterGain.gain.value = 0.4;
+      masterGain.connect(ctx.destination);
+      s.gainNodes = masterGain;
+      
+      let beat = 0;
+      const beatLen = 60 / s.bpm;
+      
+      const playBeat = () => {
+        if (!state['deck' + deck].playing) return;
+        const now = ctx.currentTime;
+        
+        // Kick on 1, 3
+        if (beat % 4 === 0 || beat % 4 === 2) {
+          const k = ctx.createOscillator();
+          const kg = ctx.createGain();
+          k.frequency.setValueAtTime(150, now);
+          k.frequency.exponentialRampToValueAtTime(40, now + 0.1);
+          kg.gain.setValueAtTime(1, now);
+          kg.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+          k.connect(kg); kg.connect(masterGain);
+          k.start(now); k.stop(now + 0.15);
+        }
+        
+        // Snare on 2, 4
+        if (beat % 4 === 1 || beat % 4 === 3) {
+          const buf = ctx.createBuffer(1, ctx.sampleRate * 0.1, ctx.sampleRate);
+          const d = buf.getChannelData(0);
+          for (let i = 0; i < d.length; i++) d[i] = (Math.random() - 0.5) * 0.5;
+          const sn = ctx.createBufferSource();
+          const sg = ctx.createGain();
+          sn.buffer = buf;
+          sg.gain.setValueAtTime(0.5, now);
+          sg.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+          sn.connect(sg); sg.connect(masterGain);
+          sn.start(now);
+        }
+        
+        // Hi-hat
+        const hbuf = ctx.createBuffer(1, ctx.sampleRate * 0.02, ctx.sampleRate);
+        const hd = hbuf.getChannelData(0);
+        for (let i = 0; i < hd.length; i++) hd[i] = (Math.random() - 0.5) * 0.2;
+        const hh = ctx.createBufferSource();
+        const hg = ctx.createGain();
+        const hf = ctx.createBiquadFilter();
+        hf.type = 'highpass'; hf.frequency.value = 9000;
+        hh.buffer = hbuf;
+        hg.gain.setValueAtTime(0.15, now);
+        hg.gain.exponentialRampToValueAtTime(0.01, now + 0.02);
+        hh.connect(hf); hf.connect(hg); hg.connect(masterGain);
+        hh.start(now);
+        
+        // Bass
+        const bassNotes = [55, 55, 73, 65];
+        const bassIdx = Math.floor(beat / 4) % 4;
+        const b = ctx.createOscillator();
+        const bg = ctx.createGain();
+        b.type = 'sawtooth';
+        b.frequency.value = bassNotes[bassIdx];
+        bg.gain.setValueAtTime(0.3, now);
+        bg.gain.exponentialRampToValueAtTime(0.01, now + beatLen * 0.9);
+        b.connect(bg); bg.connect(masterGain);
+        b.start(now); b.stop(now + beatLen * 0.9);
+        
+        beat = (beat + 1) % 16;
+      };
+      
+      playBeat();
+      beatIntervals[deck] = setInterval(playBeat, beatLen * 1000);
+    }
+    
+    function stopBeat(deck) {
+      state['deck' + deck].playing = false;
+      if (beatIntervals[deck]) {
+        clearInterval(beatIntervals[deck]);
+        beatIntervals[deck] = null;
+      }
+    }
     
     function initWaveform(id) {
       const wave = document.getElementById(id);
@@ -296,104 +349,101 @@
     
     function renderSampleList() {
       const list = document.getElementById('sampleList');
-      list.innerHTML = sampleTracks.map((track, i) => `
+      list.innerHTML = sampleTracks.map((t, i) => `
         <button class="sample-btn" onclick="loadToDeck('A', ${i})">
-          <div class="sample-name">${track.name}</div>
-          <div class="sample-info">${track.artist} | ${track.bpm} BPM</div>
+          <div class="sample-name">${t.name}</div>
+          <div class="sample-info">${t.artist} | ${t.bpm} BPM</div>
         </button>
       `).join('');
     }
     
-    function loadToDeck(deck, index) {
-      const track = sampleTracks[index];
-      const audio = document.getElementById('audio' + deck);
-      audio.src = track.url;
-      audio.load();
-      document.getElementById('trackTitle' + deck).textContent = track.name + ' - ' + track.artist;
-      document.getElementById('bpm' + deck).textContent = track.bpm.toFixed(2);
-      document.querySelectorAll('.sample-btn').forEach((btn, i) => btn.classList.toggle('playing', i === index));
-      audio.onloadedmetadata = () => {
-        const d = audio.duration, dm = Math.floor(d/60), ds = Math.floor(d%60);
-        document.getElementById('time' + deck).textContent = '0:00 / ' + dm + ':' + (ds < 10 ? '0' : '') + ds;
-      };
-      startVUMeter(deck);
+    function loadToDeck(deck, idx) {
+      const t = sampleTracks[idx];
+      const s = state['deck' + deck];
+      s.bpm = t.bpm;
+      s.type = t.type;
+      
+      document.getElementById('trackTitle' + deck).textContent = t.name + ' - ' + t.artist;
+      document.getElementById('bpm' + deck).textContent = t.bpm.toFixed(2);
+      document.getElementById('time' + deck).textContent = '0:00 / 3:00';
+      
+      document.querySelectorAll('.sample-btn').forEach((b, i) => b.classList.toggle('playing', i === idx));
+      
+      if (s.playing) { stopBeat(deck); setTimeout(() => togglePlay(deck), 50); }
     }
     
     function togglePlay(deck) {
-      const audio = document.getElementById('audio' + deck);
+      const s = state['deck' + deck];
       const btn = document.getElementById('play' + deck);
       const vinyl = document.getElementById('vinyl' + deck);
       const progress = document.getElementById('progress' + deck);
       
-      if (!audio.src) { alert('Please load a track first!'); return; }
-      
-      if (state['deck' + deck].playing) {
-        audio.pause();
-        state['deck' + deck].playing = false;
+      if (s.playing) {
+        stopBeat(deck);
         btn.classList.remove('active');
         btn.textContent = 'PLAY';
         vinyl.classList.remove('spinning');
       } else {
-        audio.play().then(() => {
-          state['deck' + deck].playing = true;
-          btn.classList.add('active');
-          btn.textContent = 'PAUSE';
-          vinyl.classList.add('spinning');
-          updateProgress(deck, audio, progress);
-        }).catch(err => alert('Load track first, then press PLAY'));
+        s.playing = true;
+        btn.classList.add('active');
+        btn.textContent = 'PAUSE';
+        vinyl.classList.add('spinning');
+        startBeat(deck);
+        updateProgress(deck, progress);
+        startVUMeter(deck);
       }
     }
     
     function cueDeck(deck) {
-      const audio = document.getElementById('audio' + deck);
-      audio.pause();
-      audio.currentTime = 0;
-      state['deck' + deck].playing = false;
+      stopBeat(deck);
       document.getElementById('play' + deck).classList.remove('active');
       document.getElementById('play' + deck).textContent = 'PLAY';
       document.getElementById('vinyl' + deck).classList.remove('spinning');
       document.getElementById('progress' + deck).style.width = '0%';
+      document.getElementById('time' + deck).textContent = '0:00 / 3:00';
     }
     
-    function updateProgress(deck, audio, progressEl) {
+    function updateProgress(deck, progressEl) {
+      const s = state['deck' + deck];
+      const startTime = Date.now();
       const update = () => {
-        if (state['deck' + deck].playing && audio.duration) {
-          progressEl.style.width = (audio.currentTime / audio.duration * 100) + '%';
-          const cm = Math.floor(audio.currentTime/60), cs = Math.floor(audio.currentTime%60);
-          const dm = Math.floor(audio.duration/60), ds = Math.floor(audio.duration%60);
-          document.getElementById('time' + deck).textContent = cm + ':' + (cs<10?'0':'') + cs + ' / ' + dm + ':' + (ds<10?'0':'') + ds;
+        if (s.playing) {
+          const elapsed = (Date.now() - startTime) / 1000;
+          progressEl.style.width = Math.min((elapsed / 180) * 100, 100) + '%';
+          const cm = Math.floor(elapsed / 60), cs = Math.floor(elapsed % 60);
+          document.getElementById('time' + deck).textContent = cm + ':' + (cs < 10 ? '0' : '') + cs + ' / 3:00';
+          requestAnimationFrame(update);
         }
-        if (state['deck' + deck].playing) requestAnimationFrame(update);
       };
       requestAnimationFrame(update);
-    }
-    
-    function updatePitch(deck, value) {
-      const audio = document.getElementById('audio' + deck);
-      document.getElementById('pitch' + deck).textContent = (value>=0?'+':'') + value + '%';
-      audio.playbackRate = 1 + (value/100);
     }
     
     function startVUMeter(deck) {
       const vu = document.getElementById('vu' + deck);
       const bars = vu.querySelectorAll('.vu-bar');
       const animate = () => {
-        if (state['deck' + deck].playing) bars.forEach(bar => bar.style.height = (20 + Math.random()*70) + '%');
-        requestAnimationFrame(animate);
+        if (state['deck' + deck].playing) {
+          bars.forEach(b => b.style.height = (20 + Math.random() * 70) + '%');
+        }
+        if (state['deck' + deck].playing) requestAnimationFrame(animate);
       };
       requestAnimationFrame(animate);
     }
     
-    function updateFader(deck, value) {
-      document.getElementById('audio' + deck).volume = value/100;
+    function updatePitch(deck, val) {
+      document.getElementById('pitch' + deck).textContent = (val >= 0 ? '+' : '') + val + '%';
     }
     
-    function updateCrossfader(value) {}
-    function toggleEffect(effect) { event.target.classList.toggle('active'); }
-    function showImportModal() { document.getElementById('importModal').classList.add('show'); }
-    function closeImportModal() { document.getElementById('importModal').classList.remove('show'); }
+    function updateFader(deck, val) {
+      if (state['deck' + deck].gainNodes) {
+        state['deck' + deck].gainNodes.gain.value = val / 100 * 0.4;
+      }
+    }
+    
+    function updateCrossfader(val) {}
+    function toggleEffect(eff) { event.target.classList.toggle('active'); }
+    function triggerPad(type) { console.log('Pad:', type); }
     function handleFileSelect(files) { alert('Imported ' + files.length + ' file(s)'); }
-    document.getElementById('importModal').addEventListener('click', e => { if (e.target === document.getElementById('importModal')) closeImportModal(); });
     
     initWaveform('waveformA');
     initWaveform('waveformB');
